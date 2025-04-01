@@ -15,6 +15,7 @@ This project involves constructing a bipartite graph connecting diseases (MESH I
 ├── cosine_similarity.csv          # Cosine similarity matrix
 ├── euclidean_distance.csv         # Euclidean distance matrix
 ├── sample_subgraph.png            # Sample visualization of the graph
+├── requirements.txt               # All the python libraries
 └── README.md                      # This file
 ```
 

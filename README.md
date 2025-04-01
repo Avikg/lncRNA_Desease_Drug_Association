@@ -25,7 +25,7 @@ This project involves constructing a bipartite graph connecting diseases (MESH I
 ```bash
 python3 -m venv graph_env
 source graph_env/bin/activate
-pip install pandas networkx matplotlib scikit-learn torch torchvision torchaudio torch-geometric torch-scatter torch-sparse torch-cluster
+pip3 install -r requirements.txt
 ```
 
 ### Step 2: Data Preparation and Graph Construction

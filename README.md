@@ -1,27 +1,32 @@
 # Disease-Chemical Graph Analysis
 
-This project involves constructing a bipartite graph connecting diseases (MESH IDs) and chemicals (DrugBank IDs), generating node embeddings through Graph Autoencoder techniques, and calculating node similarities.
+This project constructs and analyzes a bipartite graph connecting diseases (MESH IDs) and chemicals (DrugBank IDs). It utilizes graph embeddings generated via Graph Autoencoder techniques and computes node similarities. This analysis is essential for uncovering potential associations between diseases and drugs, facilitating drug repurposing and disease treatment insights.
+
+## Motivation
+Understanding the relationships between diseases and chemicals is crucial for drug discovery and repositioning. Traditional approaches lack structural insights, which graph-based methods can effectively capture. Graph embeddings offer powerful representations of complex interactions, enabling precise similarity analyses and insightful predictions.
 
 ## Project Structure
 ```
 .
-├── dch.tsv                        # Original dataset
+├── dch.tsv                        # Original dataset containing disease-chemical pairs
 ├── step1_data_prep.py             # Graph construction and preprocessing
-├── step2_graph_embedding.py       # Graph embedding with Graph Autoencoder
-├── step3_similarity.py            # Node similarity computations
-├── disease_chemical_graph.gpickle # Saved NetworkX Graph
-├── graph_data.pt                  # PyTorch Geometric graph data
-├── node_embeddings.pt             # Generated node embeddings
-├── cosine_similarity.csv          # Cosine similarity matrix
-├── euclidean_distance.csv         # Euclidean distance matrix
-├── sample_subgraph.png            # Sample visualization of the graph
-├── requirements.txt               # All the python libraries
-└── README.md                      # This file
+├── step2_graph_embedding.py       # Embedding the graph using Graph Autoencoder
+├── step3_similarity.py            # Computing similarities between node embeddings
+├── disease_chemical_graph.gpickle # Saved NetworkX Graph object
+├── graph_data.pt                  # PyTorch Geometric graph data object
+├── node_embeddings.pt             # Generated embeddings from Graph Autoencoder
+├── cosine_similarity.csv          # Pairwise cosine similarity matrix
+├── euclidean_distance.csv         # Pairwise Euclidean distance matrix
+├── sample_subgraph.png            # Visualization of a small subset of the graph
+├── requirements.txt               # Project dependencies
+└── README.md                      # Project documentation
 ```
 
-## Steps to Run
+## Detailed Steps
 
 ### Step 1: Environment Setup
+This step ensures a reproducible Python environment with all necessary libraries.
+
 ```bash
 python3 -m venv graph_env
 source graph_env/bin/activate
@@ -29,9 +34,16 @@ pip3 install -r requirements.txt
 ```
 
 ### Step 2: Data Preparation and Graph Construction
+This script loads the data (`dch.tsv`), constructs a bipartite graph, and saves the resulting NetworkX graph object.
+
 ```bash
-python step1_data_prep.py
+python3 step1_data_prep.py
 ```
+
+**Why required:**
+- Transforms raw data into a structured graph.
+- Enables visualization and graph-based analyses.
+
 #### Expected Output:
 ```
 Number of nodes: 7199
@@ -39,10 +51,21 @@ Number of edges: 466657
 Graph and sample visualization saved successfully.
 ```
 
+### Sample Subgraph Visualization (`sample_subgraph.png`)
+- Visualizes a smaller subset of the constructed graph for quick qualitative assessment.
+- Useful for verifying correct graph construction and preliminary understanding of node interactions.
+
 ### Step 3: Graph Embeddings with Graph Autoencoder
+Generates embeddings capturing the structural information of the graph.
+
 ```bash
-python step2_graph_embedding.py
+python3 step2_graph_embedding.py
 ```
+
+**Why required:**
+- Provides powerful node representations for downstream tasks.
+- Captures meaningful structural and relational features of nodes.
+
 #### Example Output:
 ```
 Epoch: 10, Loss: 1.1276
@@ -59,30 +82,46 @@ Node embeddings saved successfully.
 ```
 
 ### Step 4: Similarity Computation
+Calculates similarity matrices using Cosine and Euclidean metrics, identifying structurally similar nodes.
+
 ```bash
-python step3_similarity.py
+python3 step3_similarity.py
 ```
+
+**Why required:**
+- Identifies potential novel drug-disease associations.
+- Facilitates drug repurposing through inferred similarities.
+
 #### Expected Output:
 ```
 Similarity matrices saved successfully.
 ```
 
 ## Outputs
-- `cosine_similarity.csv`: Pairwise cosine similarity between nodes.
-- `euclidean_distance.csv`: Pairwise Euclidean distances between nodes.
-
-## Applications
-- Disease-drug relationship analysis
-- Drug repurposing research
-- Graph-based similarity analysis
+- `cosine_similarity.csv`: Node similarity based on cosine distance, where higher values indicate greater similarity.
+- `euclidean_distance.csv`: Node similarity based on Euclidean distance, where smaller values indicate greater similarity.
 
 ## Dependencies
-- Python (3.8 or higher recommended)
-- pandas
-- networkx
-- matplotlib
-- torch, PyTorch Geometric
-- scikit-learn
+Included in `requirements.txt`:
+```
+pandas
+networkx
+matplotlib
+scikit-learn
+torch
+torchvision
+torchaudio
+torch-geometric
+torch-scatter
+torch-sparse
+torch-cluster
+numpy
+```
+
+## Applications
+- Exploring disease-drug relationship networks.
+- Identifying drug repurposing opportunities.
+- Structural similarity analyses in biomedical networks.
 
 ## Author
 Avik Pramanick

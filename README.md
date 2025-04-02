@@ -8,18 +8,20 @@ Understanding the relationships between diseases and chemicals is crucial for dr
 ## Project Structure
 ```
 .
-├── dch.tsv                        # Original dataset containing disease-chemical pairs
-├── step1_data_prep.py             # Graph construction and preprocessing
-├── step2_graph_embedding.py       # Embedding the graph using Graph Autoencoder
-├── step3_similarity.py            # Computing similarities between node embeddings
-├── disease_chemical_graph.gpickle # Saved NetworkX Graph object
-├── graph_data.pt                  # PyTorch Geometric graph data object
-├── node_embeddings.pt             # Generated embeddings from Graph Autoencoder
-├── cosine_similarity.csv          # Pairwise cosine similarity matrix
-├── euclidean_distance.csv         # Pairwise Euclidean distance matrix
-├── sample_subgraph.png            # Visualization of a small subset of the graph
-├── requirements.txt               # Project dependencies
-└── README.md                      # Project documentation
+├── dch.tsv                         # Original dataset containing disease-chemical pairs
+├── step1_data_prep.py              # Graph construction and preprocessing
+├── step2_graph_embedding.py        # Embedding the graph using Graph Autoencoder
+├── step3_similarity.py             # Computing similarities between node embeddings
+├── drug_drug_similarity.py         # Computing drug-drug similarity via transitive relationships
+├── disease_chemical_graph.gpickle  # Saved NetworkX Graph object
+├── graph_data.pt                   # PyTorch Geometric graph data object
+├── node_embeddings.pt              # Generated embeddings from Graph Autoencoder
+├── cosine_similarity.csv           # Pairwise cosine similarity matrix (disease-disease)
+├── euclidean_distance.csv          # Pairwise Euclidean distance matrix (disease-disease)
+├── drug_drug_similarity.csv        # Computed pairwise drug-drug similarity matrix
+├── sample_subgraph.png             # Visualization of a small subset of the graph
+├── requirements.txt                # Project dependencies
+└── README.md                       # Project documentation
 ```
 
 ## Detailed Steps
@@ -30,14 +32,14 @@ This step ensures a reproducible Python environment with all necessary libraries
 ```bash
 python3 -m venv graph_env
 source graph_env/bin/activate
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Step 2: Data Preparation and Graph Construction
 This script loads the data (`dch.tsv`), constructs a bipartite graph, and saves the resulting NetworkX graph object.
 
 ```bash
-python3 step1_data_prep.py
+python step1_data_prep.py
 ```
 
 **Why required:**
@@ -59,7 +61,7 @@ Graph and sample visualization saved successfully.
 Generates embeddings capturing the structural information of the graph.
 
 ```bash
-python3 step2_graph_embedding.py
+python step2_graph_embedding.py
 ```
 
 **Why required:**
@@ -81,11 +83,11 @@ Epoch: 100, Loss: 0.9708
 Node embeddings saved successfully.
 ```
 
-### Step 4: Similarity Computation
-Calculates similarity matrices using Cosine and Euclidean metrics, identifying structurally similar nodes.
+### Step 4: Disease-Disease Similarity Computation
+Calculates similarity matrices using Cosine and Euclidean metrics for diseases, identifying structurally similar nodes.
 
 ```bash
-python3 step3_similarity.py
+python step3_similarity.py
 ```
 
 **Why required:**
@@ -97,9 +99,25 @@ python3 step3_similarity.py
 Similarity matrices saved successfully.
 ```
 
+### Step 5: Drug-Drug Similarity Computation
+Computes drug-drug similarity via transitive relationships based on disease-disease similarity matrices.
+
+```bash
+python drug_drug_similarity.py
+```
+
+**Why required:**
+- Discovers drug similarities indirectly, providing deeper insights for drug repositioning and combination therapies.
+
+#### Expected Output:
+```
+Drug-drug similarity matrix successfully created and saved as 'drug_drug_similarity.csv'.
+```
+
 ## Outputs
 - `cosine_similarity.csv`: Node similarity based on cosine distance, where higher values indicate greater similarity.
 - `euclidean_distance.csv`: Node similarity based on Euclidean distance, where smaller values indicate greater similarity.
+- `drug_drug_similarity.csv`: Derived pairwise drug-drug similarity based on transitive disease relationships.
 
 ## Dependencies
 Included in `requirements.txt`:

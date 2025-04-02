@@ -120,7 +120,7 @@ Drug-drug similarity matrix successfully created and saved as 'drug_drug_similar
 Generates explicit edges between drugs based on a predefined similarity threshold, facilitating clear visualization and direct interpretation of drug relationships.
 
 ```bash
-python drug_drug_edges.py
+python3 drug_drug_edges.py
 ```
 
 **Why required:**

@@ -13,12 +13,14 @@ Understanding the relationships between diseases and chemicals is crucial for dr
 ├── step2_graph_embedding.py        # Embedding the graph using Graph Autoencoder
 ├── step3_similarity.py             # Computing similarities between node embeddings
 ├── drug_drug_similarity.py         # Computing drug-drug similarity via transitive relationships
+├── drug_drug_edges.py              # Creating drug-drug edges based on similarity thresholding
 ├── disease_chemical_graph.gpickle  # Saved NetworkX Graph object
 ├── graph_data.pt                   # PyTorch Geometric graph data object
 ├── node_embeddings.pt              # Generated embeddings from Graph Autoencoder
 ├── cosine_similarity.csv           # Pairwise cosine similarity matrix (disease-disease)
 ├── euclidean_distance.csv          # Pairwise Euclidean distance matrix (disease-disease)
 ├── drug_drug_similarity.csv        # Computed pairwise drug-drug similarity matrix
+├── drug_drug_edges.csv             # Generated drug-drug edges based on similarity threshold
 ├── sample_subgraph.png             # Visualization of a small subset of the graph
 ├── requirements.txt                # Project dependencies
 └── README.md                       # Project documentation
@@ -32,14 +34,14 @@ This step ensures a reproducible Python environment with all necessary libraries
 ```bash
 python3 -m venv graph_env
 source graph_env/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ### Step 2: Data Preparation and Graph Construction
 This script loads the data (`dch.tsv`), constructs a bipartite graph, and saves the resulting NetworkX graph object.
 
 ```bash
-python step1_data_prep.py
+python3 step1_data_prep.py
 ```
 
 **Why required:**
@@ -61,7 +63,7 @@ Graph and sample visualization saved successfully.
 Generates embeddings capturing the structural information of the graph.
 
 ```bash
-python step2_graph_embedding.py
+python3 step2_graph_embedding.py
 ```
 
 **Why required:**
@@ -87,7 +89,7 @@ Node embeddings saved successfully.
 Calculates similarity matrices using Cosine and Euclidean metrics for diseases, identifying structurally similar nodes.
 
 ```bash
-python step3_similarity.py
+python3 step3_similarity.py
 ```
 
 **Why required:**
@@ -103,7 +105,7 @@ Similarity matrices saved successfully.
 Computes drug-drug similarity via transitive relationships based on disease-disease similarity matrices.
 
 ```bash
-python drug_drug_similarity.py
+python3 drug_drug_similarity.py
 ```
 
 **Why required:**
@@ -114,10 +116,27 @@ python drug_drug_similarity.py
 Drug-drug similarity matrix successfully created and saved as 'drug_drug_similarity.csv'.
 ```
 
+### Step 6: Creating Drug-Drug Edges
+Generates explicit edges between drugs based on a predefined similarity threshold, facilitating clear visualization and direct interpretation of drug relationships.
+
+```bash
+python drug_drug_edges.py
+```
+
+**Why required:**
+- Simplifies the analysis of drug similarity relationships.
+- Provides structured data ready for visualization and further analyses.
+
+#### Example Output:
+```
+Drug-drug edges successfully created and saved to 'drug_drug_edges.csv'. Total edges: 16710.
+```
+
 ## Outputs
 - `cosine_similarity.csv`: Node similarity based on cosine distance, where higher values indicate greater similarity.
 - `euclidean_distance.csv`: Node similarity based on Euclidean distance, where smaller values indicate greater similarity.
 - `drug_drug_similarity.csv`: Derived pairwise drug-drug similarity based on transitive disease relationships.
+- `drug_drug_edges.csv`: Drug-drug edges based on similarity thresholding.
 
 ## Dependencies
 Included in `requirements.txt`:
@@ -143,4 +162,3 @@ numpy
 
 ## Author
 Avik Pramanick
-
